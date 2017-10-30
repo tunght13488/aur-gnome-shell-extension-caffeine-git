@@ -4,7 +4,7 @@
 # You may find it convenient to file issues and pull requests there.
 
 pkgname=gnome-shell-extension-caffeine-git
-pkgver=r130
+pkgver=r139.ce0d0d4
 pkgrel=1
 pkgdesc="Fill the cup to inhibit auto suspend and screensaver."
 arch=(any)
@@ -81,20 +81,20 @@ package_10_schemas() {
   msg2 'Installing schemas...'
   find -name '*.xml' -exec install -Dm644 -t "$pkgdir/usr/share/glib-2.0/schemas" '{}' +
 }
-depends[125]=gnome-shell
+# depends[125]=gnome-shell
 
-package_20_version() {
-  local compatibles=($(\
-    find -path ./pkg -type d -prune -o \
-    -name metadata.json -exec cat '{}' \; | \
-    tr -d '\n' | grep -Po '(?<="shell-version": \[)[^\[\]]*(?=\])' | \
-    tr '\n," ' '\n' | sed 's/3\.//g;/^$/d' | sort -n -t. -k 1,1))
-  depends+=("gnome-shell>=3.${compatibles[0]}")
-  local max="${compatibles[-1]}"
-  if [ "$max" != $(
-    gnome-shell --version | grep -Po '(?<=GNOME Shell 3\.)[[:digit:]]+'
-  ) ]; then
-    depends+=("gnome-shell<3.$((${max%%.*} + 1))")
-  fi
-  unset depends[125]
-}
+# package_20_version() {
+#   local compatibles=($(\
+#     find -path ./pkg -type d -prune -o \
+#     -name metadata.json -exec cat '{}' \; | \
+#     tr -d '\n' | grep -Po '(?<="shell-version": \[)[^\[\]]*(?=\])' | \
+#     tr '\n," ' '\n' | sed 's/3\.//g;/^$/d' | sort -n -t. -k 1,1))
+#   depends+=("gnome-shell>=3.${compatibles[0]}")
+#   local max="${compatibles[-1]}"
+#   if [ "$max" != $(
+#     gnome-shell --version | grep -Po '(?<=GNOME Shell 3\.)[[:digit:]]+'
+#   ) ]; then
+#     depends+=("gnome-shell<3.$((${max%%.*} + 1))")
+#   fi
+#   unset depends[125]
+# }
